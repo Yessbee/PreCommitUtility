@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "PreCommitUtilityServer": {
+      "type": "stdio",
+      "command": "java",
+      "args": [
+        "-jar",
+        "D:/GitHubProjects/PreCommitUtility/target/pre_commit_utility-1.0.0.jar",
+        "--spring.main.banner-mode=off",
+        "--logging.level.root=ERROR"
+      ]
+    }
+  }
+}
