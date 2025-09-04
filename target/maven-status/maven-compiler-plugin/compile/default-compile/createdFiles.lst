@@ -1,0 +1,5 @@
+com\drona\precommit\mainapp\PreCommitCli.class
+com\drona\precommit\service\CommitMessageTool.class
+com\drona\precommit\toolconfig\ToolConfig.class
+com\drona\precommit\mainapp\PreCommitApplication.class
+com\drona\precommit\utils\GitUtils.class

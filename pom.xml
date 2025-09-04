@@ -1,0 +1,158 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Maven model version - required -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Parent POM providing default configurations for Spring Boot applications -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.5.1</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!-- Project coordinates -->
+    <groupId>com.drona</groupId>
+    <artifactId>pre_commit_utility</artifactId>
+    <version>1.0.0</version>
+    <name>PreCommitUtility</name>
+    <description>PreCommitUtility is a simple utility to analyse and check rules before code commit</description>
+    <!-- Packaging type - creates a JAR file -->
+    <packaging>jar</packaging>
+
+    <!-- Project properties - defining versions and other constants -->
+    <properties>
+        <java.version>17</java.version> <!-- Java version for compilation -->
+        <spring.boot.version>3.5.1</spring.boot.version> <!-- Spring Boot version -->
+        <spring.ai.version>1.0.0</spring.ai.version> <!-- Spring AI version -->
+        <spring.ai.starter.mcp.version>1.0.0</spring.ai.starter.mcp.version>
+    </properties>
+
+<!--    &lt;!&ndash; Dependency management section - controls versions of dependencies &ndash;&gt;-->
+<!--    <dependencyManagement>-->
+<!--        <dependencies>-->
+<!--            &lt;!&ndash; Import Spring Boot BOM to manage Spring Boot dependencies versions &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-dependencies</artifactId>-->
+<!--                <version>${spring.boot.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope> &lt;!&ndash; Import scope allows using dependency management from this POM &ndash;&gt;-->
+<!--            </dependency>-->
+<!--            -->
+<!--            &lt;!&ndash; Import Spring AI BOM to manage Spring AI dependencies versions &ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.ai</groupId>-->
+<!--                <artifactId>spring-ai-bom</artifactId>-->
+<!--                <version>${spring.ai.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope> &lt;!&ndash; Import scope allows using dependency management from this POM &ndash;&gt;-->
+<!--            </dependency>-->
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
+
+
+    <!-- Project dependencies - actual libraries used in the project -->
+    <dependencies>
+        <!-- Spring AI MCP Server starter - provides Model Calling Protocol server capabilities -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-starter-mcp-server</artifactId>
+            <version>${spring.ai.starter.mcp.version}</version>
+        </dependency>
+
+        <!-- Jackson Databind - JSON processing library -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
+        <!-- Jackson Core - core JSON processing library -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
+        <!-- Jackson Annotations - annotations for JSON processing -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.16.1</version>
+        </dependency>
+
+    </dependencies>
+
+    <!-- Build configuration -->
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven Plugin: Builds executable JAR -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <!-- Main class to run when executing the JAR -->
+                    <mainClass>com.drona.precommit.PreCommitApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Compiler Plugin: Compiles Java code -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <!-- Maven Resources Plugin: Handles resource files -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+            </plugin>
+
+            <!-- Maven Surefire Plugin: Runs unit tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.0</version>
+            </plugin>
+
+            <!-- Maven Dependency Plugin: Analyzes dependencies -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.8.0</version>
+                <executions>
+                    <execution>
+                        <id>analyze</id>
+                        <goals>
+                            <goal>analyze-only</goal>
+                        </goals>
+                        <phase>verify</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
